@@ -3,6 +3,8 @@ $(function(){
 	var msheight;
 	var wrapwidth;
 	var dragindex;
+	var class_slide;
+	var sort_index;
 	if($('body').find('.slide-wrap'))
 		{
 		$('.slide-wrap').append('<div id="slide-container" class="slide-container"></div><ul id="indicator" class="indicator"></ul><div id="prev-btn" class="con-btn"></div><div id="next-btn" class="con-btn"></div>');
@@ -14,6 +16,8 @@ $(function(){
 				slideNum++;
 				$('.slide-container').append('<div class="slide" id="slide'+slideNum+'" data-index="'+slideNum+'"><img src='+item.img_url+' alt="event'+slideNum+'"></div>');
 				$('.indicator').append('<li id="bulet'+slideNum+'" class="bulet" data-index="'+slideNum+'">●</li>');
+				$('.bulet').css({'color':'#ccc'});
+				$('#bulet1').css({'color':'#999'});
 				mswidth = $('.slide').each(Array).length;/*슬라이드 전체 배열의 갯수만큼의 숫자를 추출*/
 				for (var i=0;i<mswidth;i++)/*.slide의 배열이 늘어나면 알아서 아이디와 레프트값 연산 및 .indicator의 btn도 배열 갯수만큼 append*/
 				{
@@ -30,6 +34,8 @@ $(function(){
 			var move;
 			var autospeed=2000;
 			var barspeed = autospeed-200;
+			class_slide = document.getElementsByClassName('slide');
+			sort_index = $('.slide, .bulet').data('index');
 
 			$(window).resize(function(){
 				msheight = $('.slide img').height();
@@ -40,36 +46,47 @@ $(function(){
 				$('.slide-wrap').css({'height':msheight});
 			});
 			
-			
 			//sort_prev = $('.slide').prev().data('index');
 			//sort_next = $('.slide').next().data('index');
 			//console.log(sort_next);
+			console.log(sort_index);
 
 			function nextBtn(){
-				sort_all=1;
-				if(sort_all<mswidth-1){
-					sort_all++;
-					move=sort_all*-100;
-					console.log(move);
+				if(sort_index<mswidth){
+					move=sort_index*-100;
+					sort_index++;
+					console.log('befor - move = '+move+' / sort_index = '+sort_index+' / mswidth = '+mswidth);
 					$('.slide-container').stop().animate({'left':move+'%'},100);
+					$('.bulet').css({'color':'#ccc'});
+					$('#bulet'+sort_index).css({'color':'#999'});
+					console.log('after - move = '+move+' / sort_index = '+sort_index+' / mswidth = '+mswidth);
 				}else{
-					sort_all=0;
-					move=sort_all*-100;
+					sort_index=0;
+					move=sort_index*-100;
+					console.log('reset  -  move = '+move+' / sort_index = '+sort_index+' / mswidth = '+mswidth);
 					$('.slide-container').stop().animate({'left':move+'%'},100);
+					sort_index++;
+					$('.bulet').css({'color':'#ccc'});
+					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 				//sort_all = parseInt($('.slide').data('index'));
-				
-				
 			};
 
 			function prevBtn(){
-				if(sort_all<0){
-					sort_all--;
-					move=sort_all*-100;
+				if(sort_index>0&&move<0){
+					console.log('before = '+move+' / sort = '+sort_index);
+					sort_index--;
+					move=(sort_index-1)*-100;
+					console.log('after = '+move+' / sort = '+sort_index);
 					$('.slide-container').stop().animate({'left':move+'%'},100);
+					$('.bulet').css({'color':'#ccc'});
+					$('#bulet'+sort_index).css({'color':'#999'});
 				}else{
-					move = 0;
+					sort_index=mswidth;
+					move=(sort_index-1)*-100;
 					$('.slide-container').stop().animate({'left':move+'%'},100);
+					$('.bulet').css({'color':'#ccc'});
+					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 			};
 
@@ -445,7 +462,11 @@ $(function(){
 			$('.bulet').on('click mouseover mouseleave touchstart touchmove touchend touchcancle',function(){
 				if (event.type=='click')
 				{
-					
+					sort_index = $(this).data('index');
+					move=(sort_index-1)*-100;
+					$('.bulet').css({'color':'#ccc'});
+					$('#bulet'+sort_index).css({'color':'#999'});
+					$('.slide-container').stop().animate({'left':move+'%'},100);
 				}
 				if (event.type=='mouseover')
 				{
@@ -466,15 +487,15 @@ $(function(){
 				}
 				else if (event.type=='touchend'){
 					stop_s();
-					stop_bar();
-					start_s();
-					startbar();
+					setTimeout(stop_bar,0);
+					setTimeout(start_s,0);
+					setTimeout(startbar,0);
 				}
 				else if (event.type=='touchcancle'){
 					stop_s();
-					stop_bar();
-					start_s();
-					startbar();
+					setTimeout(stop_bar,0);
+					setTimeout(start_s,0);
+					setTimeout(startbar,0);
 				}
 			});
 
