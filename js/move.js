@@ -142,8 +142,10 @@ $(function(){
 				{
 					event.preventDefault();
 					event.stopPropagation();
-					tstart=event.originalEvent.touches[0].pageX;
-					ystart=event.originalEvent.touches[0].pageY;
+					// tstart=event.originalEvent.touches[0].pageX;
+					// ystart=event.originalEvent.touches[0].pageY;
+					tstart=event.originalEvent.targetTouches[0].pageX;
+					ystart=event.originalEvent.targetTouches[0].pageY;
 					stop_s();
 					stop_bar();
 				}
@@ -168,30 +170,46 @@ $(function(){
 						stop_bar();
 
 						bi=1+move/100*-1;
-						slideNum = $('.slide-container').css('left').replace('px', '');
+						slideNum = parseInt($('.slide').css('width').replace('px', ''));
 						mswidth = $('.slide').each(Array).length;
-						dragmove = (slideNum/mswidth-(tstart-tmove))/100;
+						sort_index = $(this).index();
+						move=(sort_index-1)*-100;
+						dragmove = (slideNum+tvalue)/100;
+						var updown;
 
-						if (move>mswidth*-100)/*슬라이드 갯수 최대치 자동 연산*/
-						{
-							if(tstart-tmove>0){
-								moveper=move-100/100;
-								$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
-								// console.log('here left1 = '+move+dragmove);
-							}else{
-								moveper=move-100/100*-1;
-								//move=(move-100)/100;
-								$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
-								console.log('here left2 = '+move+dragmove+' / moveper = '+moveper+' / dragmove = '+dragmove);
-							}
-
-							if (move-100==-mswidth*100)
-							{
-								move=-mswidth*100;
-							}
+						if(tvalue>0){
+							dragmove=dragmove*1;
+							updown=(move*-1)-dragmove;
+							
+							console.log('up = '+tvalue);
 						}else{
-							move=-mswidth*100+100;
+							dragmove=dragmove*1;
+							updown=move+dragmove;
+							console.log('down = '+tvalue);
 						}
+						console.log('dragmove = '+dragmove+' / move = '+move+' / slideNum-dragmove = '+(slideNum+dragmove)+' / sort_index = '+sort_index);
+						$('.slide-container').stop().animate({'left':updown+'%'},100);
+
+						// if (move>mswidth*-100)/*슬라이드 갯수 최대치 자동 연산*/
+						// {
+						// 	if(tstart-tmove>0){
+						// 		moveper=move-100/100;
+						// 		$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
+						// 		// console.log('here left1 = '+move+dragmove);
+						// 	}else{
+						// 		moveper=move-100/100*-1;
+						// 		//move=(move-100)/100;
+						// 		$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
+						// 		console.log('here left2 = '+move+dragmove+' / moveper = '+moveper+' / dragmove = '+dragmove);
+						// 	}
+
+						// 	if (move-100==-mswidth*100)
+						// 	{
+						// 		move=-mswidth*100;
+						// 	}
+						// }else{
+						// 	move=-mswidth*100+100;
+						// }
 
 					}else if (tstart-tmove<cal_width){
 
@@ -241,14 +259,12 @@ $(function(){
 					event.preventDefault();
 					event.stopPropagation();
 					tmove=event.originalEvent.changedTouches[0].pageX;
-					tend=event.originalEvent.touchend[0].pageX;
 					ymove=event.originalEvent.changedTouches[0].pageY;
-					yend=event.originalEvent.touchend[0].pageY;
 					stop_next();
 					stop_s();
 					stop_bar();
-					var tvalue = tstart-tend;
-					var yvalue = ystart-yend;
+					var tvalue = tstart-tmove;
+					var yvalue = ystart-ymove;
 					var slideNum = ($('.slide-container').css('left').replace('px', ''))%100;
 					var max_drag = (mswidth-1)*-100;
 					dragindex = $('.slide').index(this)*-100;
