@@ -161,7 +161,7 @@ $(function(){
 					var yvalue = ystart-ymove;
 					var slideNum;
 
-					if (tstart-tmove<cal_width){
+					if (tvalue<cal_width){
 
 						event.preventDefault();
 						event.stopPropagation();
@@ -173,22 +173,36 @@ $(function(){
 						slideNum = parseInt($('.slide').css('width').replace('px', ''));
 						mswidth = $('.slide').each(Array).length;
 						sort_index = $(this).index();
-						move=(sort_index-1)*-100;
-						dragmove = (slideNum+tvalue)/100;
+						sort_floor=Math.floor(sort_index);
+						move=(sort_index)*-100;
+						drag_return=(sort_floor)*-100;
+						dragmove = (tvalue/slideNum)*100;
 						var updown;
-
 						if(tvalue>0){
 							dragmove=dragmove*1;
-							updown=(move*-1)-dragmove;
-							
-							console.log('up = '+tvalue);
+							console.log('up = '+tvalue+' / dragmove'+dragmove);
 						}else{
-							dragmove=dragmove*1;
-							updown=move+dragmove;
+							dragmove=dragmove*-1;
 							console.log('down = '+tvalue);
 						}
-						console.log('dragmove = '+dragmove+' / move = '+move+' / slideNum-dragmove = '+(slideNum+dragmove)+' / sort_index = '+sort_index);
-						$('.slide-container').stop().animate({'left':updown+'%'},100);
+						if(dragmove<40&&dragmove>-40){
+							event.preventDefault();
+							event.stopPropagation();
+							stop_s();
+							stop_bar();
+							updown=move+dragmove;
+							console.log('dragmove = '+dragmove+' / move = '+move+' / updown = '+updown);
+							$('.slide-container').stop().animate({'left':updown+'%'},100);
+						}else{
+							event.preventDefault();
+							event.stopPropagation();
+							stop_s();
+							stop_bar();
+							console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
+						}
+
+						//$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 
 						// if (move>mswidth*-100)/*슬라이드 갯수 최대치 자동 연산*/
 						// {
@@ -211,7 +225,8 @@ $(function(){
 						// 	move=-mswidth*100+100;
 						// }
 
-					}else if (tstart-tmove<cal_width){
+					}
+					else if (tvalue<cal_width){
 
 						event.preventDefault();
 						event.stopPropagation();
@@ -219,59 +234,29 @@ $(function(){
 						stop_s();
 						stop_bar();
 
-						moveper=move+100;
-						if(move>0){
-							move=100;
-							moveper=move+100;
-						}else if(move==0){
-							moveper=move+100;
-						}else if(move<0){
-							moveper=move+100;
-						}
-						bi=1+move/100*-1;
-						slideNum = $('.slide-container').css('left').replace('px', '')%100;
-
-						if (move<100)
-						{
-							$('.slide-container').stop().animate({'left':moveper-dragmove+'%'},100);
-							// console.log('here right = '+dragmove);
-							if (move==0)
-							{
-								$('#prev-btn').css({'z-index':'-1'})
-							}
-						}else{
-							move=100;
-							//$('.slide-container').stop().animate({'left':move+'%'},100);
-							$('.slide-container').stop().animate({'left':moveper-dragmove+'%'},100);
-							$('#next-btn').css({'z-index':'2'})
-							// console.log('here right = '+dragmove);
-							if (move==0)
-							{
-								$('#prev-btn').css({'z-index':'-1'})
-							}
-						}
+						
 					}
 					start_s();
 					startbar();
 				}
-				else if (event.type=='touchend')
-				{
-					event.preventDefault();
-					event.stopPropagation();
-					tmove=event.originalEvent.changedTouches[0].pageX;
-					ymove=event.originalEvent.changedTouches[0].pageY;
-					stop_next();
-					stop_s();
-					stop_bar();
-					var tvalue = tstart-tmove;
-					var yvalue = ystart-ymove;
-					var slideNum = ($('.slide-container').css('left').replace('px', ''))%100;
-					var max_drag = (mswidth-1)*-100;
-					dragindex = $('.slide').index(this)*-100;
+				// else if (event.type=='touchend')
+				// {
+				// 	event.preventDefault();
+				// 	event.stopPropagation();
+				// 	tmove=event.originalEvent.changedTouches[0].pageX;
+				// 	ymove=event.originalEvent.changedTouches[0].pageY;
+				// 	stop_next();
+				// 	stop_s();
+				// 	stop_bar();
+				// 	var tvalue = tstart-tmove;
+				// 	var yvalue = ystart-ymove;
+				// 	var slideNum = ($('.slide-container').css('left').replace('px', ''))%100;
+				// 	var max_drag = (mswidth-1)*-100;
+				// 	dragindex = $('.slide').index(this)*-100;
 					
-					start_s();
-					startbar();
-				}
+				// 	start_s();
+				// 	startbar();
+				// }
 				// else if (event.type=='touchcancle')
 				// {
 				// 	event.preventDefault();
