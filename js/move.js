@@ -136,6 +136,10 @@ $(function(){
 				cal_width = s_width*0.6;
 				cal_height = msheight*0.2;
 				var dragmove;
+				var slideNum;
+				var updown;
+				var tvalue;
+				var yvalue;
 
 				/*swipe 이벤트 시작*/
 				if (event.type=='touchstart')
@@ -154,109 +158,99 @@ $(function(){
 					event.stopPropagation();
 					tmove=event.originalEvent.changedTouches[0].pageX;
 					ymove=event.originalEvent.changedTouches[0].pageY;
+					tvalue = tstart-tmove;
+					yvalue = ystart-ymove;
 
 					stop_s();
 					stop_bar();
-					var tvalue = tstart-tmove;
-					var yvalue = ystart-ymove;
-					var slideNum;
 
-					if (tvalue<cal_width){
+					slideNum = parseInt($('.slide').css('width').replace('px', ''));
+					mswidth = $('.slide').each(Array).length;
+					sort_index = $(this).index();
+					sort_floor=Math.floor(sort_index);
+					move=(sort_index)*-100;
+					drag_return=(sort_floor)*-100;
+					dragmove = (tvalue/slideNum)*100;
 
-						event.preventDefault();
-						event.stopPropagation();
-
-						stop_s();
-						stop_bar();
-
-						bi=1+move/100*-1;
-						slideNum = parseInt($('.slide').css('width').replace('px', ''));
-						mswidth = $('.slide').each(Array).length;
-						sort_index = $(this).index();
-						sort_floor=Math.floor(sort_index);
-						move=(sort_index)*-100;
-						drag_return=(sort_floor)*-100;
-						dragmove = (tvalue/slideNum)*100;
-						var updown;
-						if(tvalue>0){
-							dragmove=dragmove*1;
-							console.log('up = '+tvalue+' / dragmove'+dragmove);
-						}else{
-							dragmove=dragmove*-1;
-							console.log('down = '+tvalue);
-						}
-						if(dragmove<40&&dragmove>-40){
-							event.preventDefault();
-							event.stopPropagation();
-							stop_s();
-							stop_bar();
-							updown=move+dragmove;
-							console.log('dragmove = '+dragmove+' / move = '+move+' / updown = '+updown);
-							$('.slide-container').stop().animate({'left':updown+'%'},100);
-						}else{
-							event.preventDefault();
-							event.stopPropagation();
-							stop_s();
-							stop_bar();
-							console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
-							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
-						}
-
-						//$('.slide-container').stop().animate({'left':drag_return+'%'},100);
-
-						// if (move>mswidth*-100)/*슬라이드 갯수 최대치 자동 연산*/
-						// {
-						// 	if(tstart-tmove>0){
-						// 		moveper=move-100/100;
-						// 		$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
-						// 		// console.log('here left1 = '+move+dragmove);
-						// 	}else{
-						// 		moveper=move-100/100*-1;
-						// 		//move=(move-100)/100;
-						// 		$('.slide-container').stop().animate({'left':moveper+dragmove+'%'},100);
-						// 		console.log('here left2 = '+move+dragmove+' / moveper = '+moveper+' / dragmove = '+dragmove);
-						// 	}
-
-						// 	if (move-100==-mswidth*100)
-						// 	{
-						// 		move=-mswidth*100;
-						// 	}
-						// }else{
-						// 	move=-mswidth*100+100;
-						// }
-
+					if(tvalue>0){
+						dragmove=dragmove*-1;
+						//console.log('up = '+tvalue+' / dragmove'+dragmove);
+					}else{
+						dragmove=dragmove*-1;
+						//console.log('down = '+tvalue);
 					}
-					else if (tvalue<cal_width){
-
-						event.preventDefault();
-						event.stopPropagation();
-
-						stop_s();
-						stop_bar();
-
-						
-					}
+					updown=move+dragmove;
+					//console.log('dragmove = '+dragmove+' / move = '+move+' / updown = '+updown);
+					$('.slide-container').css({'left':updown+'%'});
 					start_s();
 					startbar();
 				}
-				// else if (event.type=='touchend')
-				// {
-				// 	event.preventDefault();
-				// 	event.stopPropagation();
-				// 	tmove=event.originalEvent.changedTouches[0].pageX;
-				// 	ymove=event.originalEvent.changedTouches[0].pageY;
-				// 	stop_next();
-				// 	stop_s();
-				// 	stop_bar();
-				// 	var tvalue = tstart-tmove;
-				// 	var yvalue = ystart-ymove;
-				// 	var slideNum = ($('.slide-container').css('left').replace('px', ''))%100;
-				// 	var max_drag = (mswidth-1)*-100;
-				// 	dragindex = $('.slide').index(this)*-100;
-					
-				// 	start_s();
-				// 	startbar();
-				// }
+				else if (event.type=='touchend')
+				{
+					event.preventDefault();
+					event.stopPropagation();
+					tmove=event.originalEvent.changedTouches[0].pageX;
+					ymove=event.originalEvent.changedTouches[0].pageY;
+					tvalue = tstart-tmove;
+					yvalue = ystart-ymove;
+
+					stop_s();
+					stop_bar();
+
+					slideNum = parseInt($('.slide').css('width').replace('px', ''));
+					mswidth = $('.slide').each(Array).length;
+					sort_index = $(this).index();
+					sort_floor=Math.floor(sort_index);
+					move=(sort_index)*-100;
+					drag_return=(sort_floor)*-100;
+					dragmove = (tvalue/slideNum)*100;
+					updown=move+dragmove;
+
+					if (tvalue>cal_width){
+						if(tvalue>0){
+							$('#prev-btn').stop().click();
+							console.log('prev = '+tvalue);
+						}
+						else if(tvalue<0){
+							$('#next-btn').stop().click();
+							console.log('next = '+tvalue);
+						}
+						else if(tvalue==0){
+							if(yvalue==0){
+								if($(this).is('#slide1')==true){
+									$('body').css({'background':'red'})
+								}else if($(this).is('#slide2')==true){
+									$('body').css({'background':'orange'})
+								}else if($(this).is('#slide3')==true){
+									$('body').css({'background':'yellow'})
+								}else if($(this).is('#slide4')==true){
+									$('body').css({'background':'green'})
+								}else if($(this).is('#slide5')==true){
+									$('body').css({'background':'blue'})
+								}else if($(this).is('#slide6')==true){
+									$('body').css({'background':'purple'})
+								}
+							}else{
+								if(yvalue>cal_height){
+									$('body, html').stop().animate({ scrollTop: $("body").offset().top+yvalue },300);
+								}else if(yvalue<cal_height){
+									if((yvalue*-1)>cal_height){
+										$('body, html').stop().animate({ scrollTop: $("body").offset().top+yvalue },300);
+									}
+								}
+							}
+						}
+					}else{
+						if(updown!==drag_return){
+							//console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
+							//nextBtn();
+						}
+					}
+
+					start_s();
+					startbar();
+				}
 				// else if (event.type=='touchcancle')
 				// {
 				// 	event.preventDefault();
