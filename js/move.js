@@ -195,11 +195,11 @@ $(function(){
 					console.log(tvalue-cal_width);
 					if (tvalue>cal_width){
 						$('#next-btn').stop().click();
-						//nextBtn();
+						nextBtn();
 						console.log('next = '+tvalue);
 					}else if(tvalue<-cal_width){
+						nextBtn();
 						$('#prev-btn').stop().click();
-						//prevBtn();
 						console.log('prev = '+tvalue);
 					}
 					else if(tvalue<cal_width&&tvalue>0){
@@ -444,10 +444,14 @@ $(function(){
 				else if (event.type=='touchstart'){
 					stop_s();
 					stop_bar();
+					setTimeout(start_s,0);
+					setTimeout(startbar,0);
 				}
 				else if (event.type=='touchmove'){
 					stop_s();
 					stop_bar();
+					setTimeout(start_s,0);
+					setTimeout(startbar,0);
 				}
 				else if (event.type=='touchend'){
 					stop_s();
