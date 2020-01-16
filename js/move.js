@@ -221,13 +221,14 @@ $(function(){
 					drag_return=(sort_floor)*-100;
 					dragmove = (tvalue/slideNum)*-100;
 					updown=move+dragmove;
+					var app_sort = mswidth+1;
 					console.log(tvalue-cal_width);
 					stop_s();
 					stop_bar();
 					if (tvalue>cal_width){
 						$('#next-btn').stop().click();
 						nextBtn();
-						console.log('next = '+tvalue);
+						console.log('next = '+tvalue+' / mswidth = '+mswidth+' / sort_index = '+sort_index);
 					}else if(tvalue<-cal_width){
 						nextBtn();
 						$('#prev-btn').stop().click();
@@ -235,19 +236,25 @@ $(function(){
 					}
 					else if(tvalue<cal_width&&tvalue>0){
 						if(updown!==drag_return){
-
+							// console.log('append');
+							// if(sort_index==mswidth){
+							// 	$('.slide-container').append('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'"></div>')
+							// 	$('#slide'+app_sort).load('./demo.html #slide1');
+							// };
 							//console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 							nextBtn();
-							//tvalue=0;
 						}
 					}else if(tvalue>-cal_width&&tvalue<0){
 						if(updown!==drag_return){
-
+							// if(sort_index==1){
+							// 	$('.slide-container').prepend('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'"></div>')
+							// 	$('#slide'+app_sort).load('./demo.html #slide'+mswidth);
+							// 	console.log('prepend in');
+							// };
 							//console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 							nextBtn();
-							//tvalue=0;
 						}
 					}else if(tvalue==0){
 						if(yvalue==0){
@@ -304,7 +311,7 @@ $(function(){
 					if (tvalue>cal_width){
 						$('#next-btn').stop().click();
 						nextBtn();
-						console.log('next = '+tvalue);
+						console.log('next = '+tvalue+' / mswidth = '+mswidth);
 					}else if(tvalue<-cal_width){
 						nextBtn();
 						$('#prev-btn').stop().click();
