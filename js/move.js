@@ -15,7 +15,7 @@ $(function(){
 		$.getJSON(jsonLocation, function(data){
 			$.each(data, function(I, item){
 				slideNum++;
-				$('.slide-container').append('<div class="slide" id="slide'+slideNum+'" data-index="'+slideNum+'"><img src='+item.img_url+' alt="event'+slideNum+'"></div>');
+				$('.slide-container').append('<div class="slide" id="slide'+slideNum+'" data-index="'+slideNum+'"><img src='+item.img_url+' alt="'+item.alt_text+slideNum+'"></div>');
 				$('.indicator').append('<li id="bulet'+slideNum+'" class="bulet" data-index="'+slideNum+'">●</li>');
 				$('.bulet').css({'color':'#ccc'});
 				$('#bulet1').css({'color':'#999'});
@@ -29,10 +29,10 @@ $(function(){
 			});
 			function con_btn_hidden(){
 				if(parseInt($('.slide-wrap').css('width'))<480){
-					console.log('under 640 = '+parseInt($('.slide').css('width')));
+					// console.log('under 640 = '+parseInt($('.slide').css('width')));
 					$('#prev-btn, #next-btn').css({'z-index':'-1'})
 				}else{
-					console.log('up 640'+parseInt($('.slide').css('width')));
+					// console.log('up 640'+parseInt($('.slide').css('width')));
 					$('#prev-btn, #next-btn').css({'z-index':'2'})
 				}
 			}
@@ -57,10 +57,10 @@ $(function(){
 				//con_btn_hidden();
 			});
 
-			console.log(sort_index);
+			// console.log(sort_index);
 
 			function nextBtn(){
-				console.log('app_sort = '+app_sort);
+				// console.log('app_sort = '+app_sort);
 				if(sort_index<mswidth){
 					sort_index++;
 					move=(sort_index-1)*-100;
@@ -79,7 +79,7 @@ $(function(){
 
 			function prevBtn(){
 				if(sort_index>0&&move<0){
-					console.log('before = '+move+' / sort = '+sort_index);
+					// console.log('before = '+move+' / sort = '+sort_index);
 					sort_index--;
 					move=(sort_index-1)*-100;
 					$('.slide-container').stop().animate({'left':move+'%'},100);
@@ -202,14 +202,14 @@ $(function(){
 					dragmove = (tvalue/slideNum)*-100;
 					updown=move+dragmove;
 					if(updown!==drag_return){
-						console.log('append = '+mswidth);
+						// console.log('append = '+mswidth);
 						if(sort_index==mswidth-1){
-							console.log('append in = '+sort_index);
+							// console.log('append in = '+sort_index);
 							$('.slide-container').append('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'" style="left:'+app_left+'%"></div>')
 							$('#slide1 img').clone().appendTo('#slide'+app_sort);
 						}
 						else if(sort_index==0){
-							console.log('prepend in mswidth = '+mswidth);
+							// console.log('prepend in mswidth = '+mswidth);
 							if(mswidth<app_sort){
 								$('.slide-container').append('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'" style="left:'+app_right+'%"></div>')
 								$('#slide'+mswidth).children('img').clone().prependTo('#slide'+app_sort);
@@ -241,7 +241,7 @@ $(function(){
 					drag_return=(sort_floor)*-100;
 					dragmove = (tvalue/slideNum)*-100;
 					updown=move+dragmove;
-					console.log(tvalue-cal_width);
+					// console.log(tvalue-cal_width);
 					$('#slide'+app_sort).remove('');
 					mswidth = $('.slide').each(Array).length;
 					stop_s();
@@ -249,16 +249,16 @@ $(function(){
 					nextBtn();
 					if (tvalue>cal_width){
 						$('#next-btn').stop().click();
-						console.log('next = '+tvalue+' / mswidth = '+mswidth+' / sort_index = '+sort_index);
+						// console.log('next = '+tvalue+' / mswidth = '+mswidth+' / sort_index = '+sort_index);
 					}else if(tvalue<-cal_width){
 						stop_next();
 						$('#prev-btn').stop().click();
-						console.log('move = '+move);
+						// console.log('move = '+move);
 					}
 					else if(tvalue<cal_width&&tvalue>0){
 						if(updown!==drag_return){
-							console.log('app_sort = '+app_sort);
-							//console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							// console.log('app_sort = '+app_sort);
+							// console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 						}
 					}else if(tvalue>-cal_width&&tvalue<0){
@@ -266,9 +266,9 @@ $(function(){
 							if(sort_index==1){
 								$('.slide-container').prepend('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'"></div>')
 								$('#slide'+app_sort).load('./demo.html #slide'+mswidth);
-								console.log('prepend in');
+								// console.log('prepend in');
 							};
-							console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							// console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 						}
 					}else if(tvalue==0){
@@ -300,6 +300,7 @@ $(function(){
 							}
 						}
 					}
+					$('#slide'+app_sort).remove('');
 					start_s();
 					startbar();
 				}
@@ -319,7 +320,7 @@ $(function(){
 					drag_return=(sort_floor)*-100;
 					dragmove = (tvalue/slideNum)*-100;
 					updown=move+dragmove;
-					console.log(tvalue-cal_width);
+					// console.log(tvalue-cal_width);
 					$('#slide'+app_sort).remove('');
 					mswidth = $('.slide').each(Array).length;
 					stop_s();
@@ -327,16 +328,16 @@ $(function(){
 					nextBtn();
 					if (tvalue>cal_width){
 						$('#next-btn').stop().click();
-						console.log('next = '+tvalue+' / mswidth = '+mswidth+' / sort_index = '+sort_index);
+						// console.log('next = '+tvalue+' / mswidth = '+mswidth+' / sort_index = '+sort_index);
 					}else if(tvalue<-cal_width){
 						stop_next();
 						$('#prev-btn').stop().click();
-						console.log('move = '+move);
+						// console.log('move = '+move);
 					}
 					else if(tvalue<cal_width&&tvalue>0){
 						if(updown!==drag_return){
-							console.log('app_sort = '+app_sort);
-							//console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							// console.log('app_sort = '+app_sort);
+							// console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 						}
 					}else if(tvalue>-cal_width&&tvalue<0){
@@ -344,9 +345,9 @@ $(function(){
 							if(sort_index==1){
 								$('.slide-container').prepend('<div class="slide" id="slide'+app_sort+'" data-index="'+app_sort+'"></div>')
 								$('#slide'+app_sort).load('./demo.html #slide'+mswidth);
-								console.log('prepend in');
+								// console.log('prepend in');
 							};
-							console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
+							// console.log('dragmove = '+dragmove+' / move = '+move+' / drag_return'+drag_return);
 							$('.slide-container').stop().animate({'left':drag_return+'%'},100);
 						}
 					}else if(tvalue==0){
@@ -378,6 +379,7 @@ $(function(){
 							}
 						}
 					}
+					$('#slide'+app_sort).remove('');
 					start_s();
 					startbar();
 				}
