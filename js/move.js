@@ -396,8 +396,6 @@ $(function(){
 				return false;
 			});
 
-			var cb;
-			var cbm;
 			function bullet_next(){
 				setTimeout(nextBtn,autospeed);
 			}
@@ -444,22 +442,6 @@ $(function(){
 					setTimeout(startbar,0);
 				}
 			});
-
-			// if ((move==0)||(cb==1))
-			// {
-			// 	$('#prev-btn').css({'z-index':'-1'})
-			// 	$('#next-btn').css({'z-index':'2'})
-			// 	$('.bulet').css({'color':'#ccc'})
-			// 	$('#bulet1').css({'color':'#999'})
-			// }else if ((cb!==1)&&(cb!==mswidth))
-			// {
-			// 	$('#prev-btn').css({'z-index':'2'})
-			// 	$('#next-btn').css({'z-index':'2'})
-			// }else if (cb==mswidth)
-			// {
-			// 	$('#prev-btn').css({'z-index':'2'})
-			// 	$('#next-btn').css({'z-index':'-1'})
-			// };
 
 			function lazy_0(){
 				if($('.slide-wrap').height()==0){
