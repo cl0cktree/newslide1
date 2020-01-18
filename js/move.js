@@ -1,14 +1,14 @@
 $(function(){
-	var mswidth;
-	var msheight;
-	var wrapwidth;
-	var dragindex;
-	var class_slide;
-	var sort_index;
-	var app_sort;
 	if($('body').find('.slide-wrap'))
 		{
 		$('.slide-wrap').append('<div id="slide-container" class="slide-container"></div><ul id="indicator" class="indicator"></ul><div id="prev-btn" class="con-btn"></div><div id="next-btn" class="con-btn"></div>');
+		var mswidth;
+		var msheight;
+		var wrapwidth;
+		var dragindex;
+		var class_slide;
+		var sort_index;
+		var app_sort;
 		var slideNum=0;
 		var jsonLocation = './data/data.json';
 		var sort_slide;
