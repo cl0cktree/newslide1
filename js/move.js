@@ -387,14 +387,18 @@ $(function(){
 			function bullet_next(){
 				setTimeout(nextBtn,autospeed);
 			}
-			$('.bulet').on('click mouseover mouseleave touchstart touchmove touchend touchcancle',function(){
+			$('.bulet').on('click mouseover mouseleave',function(){
 				if (event.type=='click')
 				{
+					setTimeout(stop_bar,0);
+					setTimeout(stop_s,0);
 					sort_index = $(this).data('index');
 					move=(sort_index-1)*-100;
 					$('.bulet').css({'color':'#ccc'});
 					$('#bulet'+sort_index).css({'color':'#999'});
 					$('.slide-container').stop().animate({'left':move+'%'},100);
+					setTimeout(startbar,0);
+					setTimeout(start_s,0);
 				}
 				if (event.type=='mouseover')
 				{
@@ -404,30 +408,6 @@ $(function(){
 				{
 					start_s();
 					startbar();
-				}
-				else if (event.type=='touchstart'){
-					stop_s();
-					stop_bar();
-					setTimeout(start_s,0);
-					setTimeout(startbar,0);
-				}
-				else if (event.type=='touchmove'){
-					stop_s();
-					stop_bar();
-					setTimeout(start_s,0);
-					setTimeout(startbar,0);
-				}
-				else if (event.type=='touchend'){
-					stop_s();
-					setTimeout(stop_bar,0);
-					setTimeout(start_s,0);
-					setTimeout(startbar,0);
-				}
-				else if (event.type=='touchcancle'){
-					stop_s();
-					setTimeout(stop_bar,0);
-					setTimeout(start_s,0);
-					setTimeout(startbar,0);
 				}
 			});
 
