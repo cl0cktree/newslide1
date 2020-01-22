@@ -134,6 +134,7 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
+					inner_controll_s();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
@@ -164,6 +165,7 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
+					inner_controll_s();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
@@ -399,6 +401,7 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
+					inner_controll_s();
 				}
 				else if (event.type=='mouseleave')
 				{
@@ -450,6 +453,7 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
+					inner_controll_s();
 				}else if (event.type=='mouseleave')
 				{
 					start_s();
@@ -513,6 +517,10 @@ $(function(){
 			function inner_controll(){
 				$('.controll input[type=checkbox]').prop('checked',false);
 				$('.controll label').children('span').text('Stop');
+			};
+			function inner_controll_s(){
+				$('.controll input[type=checkbox]').prop('checked',true);
+				$('.controll label').children('span').text('Play');
 			};
 			function start_s(){
 				setTimeout(lazy_0,0);
