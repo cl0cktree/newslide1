@@ -93,7 +93,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 				page();
-				inner_controll();
+				inner_controll_s();
 				//sort_all = parseInt($('.slide').data('index'));
 			};
 
@@ -113,7 +113,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 				page();
-				inner_controll();
+				inner_controll_s();
 			};
 
 			function stop_next(){
@@ -134,12 +134,12 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
-					inner_controll_s();
+					inner_controll_p();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
 					startbar();
-					inner_controll();
+					inner_controll_s();
 				}
 				else if (event.type='click')
 				{
@@ -165,12 +165,12 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
-					inner_controll_s();
+					inner_controll_p();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
 					startbar();
-					inner_controll();
+					inner_controll_s();
 				}
 				else if (event.type='click')
 				{
@@ -401,13 +401,13 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
-					inner_controll_s();
+					inner_controll_p();
 				}
 				else if (event.type=='mouseleave')
 				{
 					start_s();
 					startbar();
-					inner_controll();
+					inner_controll_s();
 				}
 				else if(event.type=='click'){
 					if($(this).is('#slide1')==true){
@@ -445,7 +445,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 					$('.slide-container').stop().animate({'left':move+'%'},100);
 					page();
-					inner_controll();
+					inner_controll_s();
 					setTimeout(startbar,0);
 					setTimeout(start_s,0);
 				}
@@ -453,12 +453,12 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
-					inner_controll_s();
+					inner_controll_p();
 				}else if (event.type=='mouseleave')
 				{
 					start_s();
 					startbar();
-					inner_controll();
+					inner_controll_s();
 				}
 			});
 
@@ -514,11 +514,11 @@ $(function(){
 					}
 				});
 			}
-			function inner_controll(){
+			function inner_controll_s(){
 				$('.controll input[type=checkbox]').prop('checked',false);
 				$('.controll label').children('span').text('Stop');
 			};
-			function inner_controll_s(){
+			function inner_controll_p(){
 				$('.controll input[type=checkbox]').prop('checked',true);
 				$('.controll label').children('span').text('Play');
 			};
@@ -528,16 +528,16 @@ $(function(){
 				slide_on = setInterval(function(){
 					nextBtn();
 				},autospeed);
-			}
+			};
 			start_s();
 			startbar();
 			function stop_s(){
 				clearInterval(slide_on);
-			}
+			};
 			function stop_bar(){
 				$('.timebar').remove();
 				clearInterval(bar_on);
-			}
+			};
 		});
 	};
 	return false;
