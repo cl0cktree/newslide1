@@ -93,7 +93,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 				page();
-				inner_controll_s();
+				// inner_controll_s();
 				//sort_all = parseInt($('.slide').data('index'));
 			};
 
@@ -113,7 +113,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 				}
 				page();
-				inner_controll_s();
+				// inner_controll_s();
 			};
 
 			function stop_next(){
@@ -134,12 +134,12 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
-					inner_controll_p();
+					// inner_controll_p();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
 					startbar();
-					inner_controll_s();
+					// inner_controll_s();
 				}
 				else if (event.type='click')
 				{
@@ -165,12 +165,12 @@ $(function(){
 					event.stopPropagation();
 					stop_s();
 					stop_bar();
-					inner_controll_p();
+					// inner_controll_p();
 				}else if (event.type=='mouseout')
 				{
 					start_s();
 					startbar();
-					inner_controll_s();
+					// inner_controll_s();
 				}
 				else if (event.type='click')
 				{
@@ -186,7 +186,7 @@ $(function(){
 			});
 
 			$('.slide').on('touchstart touchmove touchend touchcancle click mouseover mouseleave',function(event){
-				cal_width = s_width*0.6;
+				cal_width = s_width*0.5;
 				cal_height = msheight*0.2;
 				var dragmove;
 				var slideNum;
@@ -385,13 +385,13 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
-					inner_controll_p();
+					// inner_controll_p();
 				}
 				else if (event.type=='mouseleave')
 				{
 					start_s();
 					startbar();
-					inner_controll_s();
+					// inner_controll_s();
 				}
 				else if(event.type=='click'){
 					click_move();
@@ -413,7 +413,7 @@ $(function(){
 					$('#bulet'+sort_index).css({'color':'#999'});
 					$('.slide-container').stop().animate({'left':move+'%'},100);
 					page();
-					inner_controll_s();
+					// inner_controll_s();
 					setTimeout(startbar,0);
 					setTimeout(start_s,0);
 				}
@@ -421,12 +421,12 @@ $(function(){
 				{
 					stop_s();
 					stop_bar();
-					inner_controll_p();
+					// inner_controll_p();
 				}else if (event.type=='mouseleave')
 				{
 					start_s();
 					startbar();
-					inner_controll_s();
+					// inner_controll_s();
 				}
 			});
 
@@ -442,13 +442,25 @@ $(function(){
 			}
 			function startbar(){
 				setTimeout(lazy_0,0);
-				$('.slide-wrap').append('<span class="timebar" style="display:inline-block;position:absolute;bottom:0px;left:0;width:0;height:20px;background:rgba(0,0,0,0.7);z-index:1"></span>')
-				$('.timebar').stop().animate({'width':'100%'},barspeed);
-				bar_on = setInterval(function(){
-						$('.timebar').remove();
+				if($('.slide-wrap').find('.controll').length<1){
+					$('.slide-wrap').append('<span class="timebar" style="display:inline-block;position:absolute;bottom:0px;left:0;width:0;height:20px;background:rgba(0,0,0,0.7);z-index:1"></span>')
+					$('.timebar').stop().animate({'width':'100%'},barspeed);
+					bar_on = setInterval(function(){
+							$('.timebar').remove();
+							$('.slide-wrap').append('<span class="timebar" style="display:inline-block;position:absolute;bottom:0px;left:0;width:0;height:20px;background:rgba(0,0,0,0.7);z-index:1"></span>')
+							$('.timebar').stop().animate({'width':'100%'},barspeed);
+					},autospeed);
+				}else{
+					if($('.controll input[type=checkbox]').prop('checked')==false){
 						$('.slide-wrap').append('<span class="timebar" style="display:inline-block;position:absolute;bottom:0px;left:0;width:0;height:20px;background:rgba(0,0,0,0.7);z-index:1"></span>')
 						$('.timebar').stop().animate({'width':'100%'},barspeed);
-				},autospeed);
+						bar_on = setInterval(function(){
+								$('.timebar').remove();
+								$('.slide-wrap').append('<span class="timebar" style="display:inline-block;position:absolute;bottom:0px;left:0;width:0;height:20px;background:rgba(0,0,0,0.7);z-index:1"></span>')
+								$('.timebar').stop().animate({'width':'100%'},barspeed);
+						},autospeed);
+					}
+				}
 			};
 			function page(){
 				if($('.slide-wrap').find('.pagecount').length<1){
@@ -489,6 +501,7 @@ $(function(){
 					click_snd();
 				});
 			};
+			//-----------------현재 비 활성화 중으로 현재의 auto slide 상태를 바로 확인하고 싶을 때는 start_s()와 startbar()안의 if문을 일반 실행 형태로 바꾸고 inner_controll_s()/inner_controll_p() 활성화 할 것.
 			function inner_controll_s(){
 				$('.controll input[type=checkbox]').prop('checked',false);
 				$('.controll label').children('span').text('Stop');
@@ -497,6 +510,7 @@ $(function(){
 				$('.controll input[type=checkbox]').prop('checked',true);
 				$('.controll label').children('span').text('Play');
 			};
+			//----------------------------------------------------------------------------------------------
 			function click_move(){
 				if(sort_index==1){
 					$('body').css({'background':'red'})
@@ -519,9 +533,17 @@ $(function(){
 			function start_s(){
 				setTimeout(lazy_0,0);
 				stop_next();
-				slide_on = setInterval(function(){
-					nextBtn();
-				},autospeed);
+				if($('.slide-wrap').find('.controll').length<1){
+					slide_on = setInterval(function(){
+						nextBtn();
+					},autospeed);
+				}else{
+					if($('.controll input[type=checkbox]').prop('checked')==false){
+						slide_on = setInterval(function(){
+							nextBtn();
+						},autospeed);
+					}
+				}
 			};
 			start_s();
 			startbar();
