@@ -132,8 +132,8 @@ $(function(){
 			}
 
 			$('#prev-btn').on('mouseover mouseout click',function(){
-				event.preventDefault();
-				event.stopPropagation();
+				// event.preventDefault();
+				// event.stopPropagation();
 				stop_s();
 				stop_bar();
 				if (event.type=='mouseover')
@@ -163,8 +163,8 @@ $(function(){
 			});
 
 			$('#next-btn').on('mouseover mouseout click',function(){
-				event.preventDefault();
-				event.stopPropagation();
+				// event.preventDefault();
+				// event.stopPropagation();
 				stop_s();
 				stop_bar();
 				if (event.type=='mouseover')
