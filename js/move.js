@@ -138,8 +138,8 @@ $(function(){
 				stop_bar();
 				if (event.type=='mouseover')
 				{
-					event.preventDefault();
-					event.stopPropagation();
+					// event.preventDefault();
+					// event.stopPropagation();
 					stop_s();
 					stop_bar();
 					// inner_controll_p();
@@ -151,8 +151,8 @@ $(function(){
 				}
 				else if (event.type='click')
 				{
-					event.preventDefault();
-					event.stopPropagation();
+					// event.preventDefault();
+					// event.stopPropagation();
 					setTimeout(stop_bar,0);
 					setTimeout(stop_s,0);
 					setTimeout(stop_next,0);
@@ -169,8 +169,8 @@ $(function(){
 				stop_bar();
 				if (event.type=='mouseover')
 				{
-					event.preventDefault();
-					event.stopPropagation();
+					// event.preventDefault();
+					// event.stopPropagation();
 					stop_s();
 					stop_bar();
 					// inner_controll_p();
@@ -182,8 +182,8 @@ $(function(){
 				}
 				else if (event.type='click')
 				{
-					event.preventDefault();
-					event.stopPropagation();
+					// event.preventDefault();
+					// event.stopPropagation();
 					setTimeout(stop_bar,0);
 					setTimeout(stop_s,0);
 					setTimeout(stop_prev,0);
